@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube Channel Stats</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            background-color:#418be7;
+            color: #ffffff;
+            padding: 20px;
+            margin-top: 0;
+        }
+
+        form {
+            text-align: center;
+            margin: 20px auto;
+        }
+
+        label {
+            font-size: 18px;
+            margin-right: 10px;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color:#445709;
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0ca758;
+        }
+
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            font-size: 18px;
+            margin: 10px 0;
+            background-color: #ffffff;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>YouTube Channel Stats</h1>
+    
+    <form method="post" action="{% url 'youtube_stats' %}">
+        {% csrf_token %}
+        <label for="channel">Select a Channel:</label>
+        <select name="channel" id="channel">
+            {% for channel in channel_data %}
+                <option value="{{ channel.CHANNEL_NAME }}">{{ channel.CHANNEL_NAME }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Submit</button>
+    </form>
+
+    {% if selected_channel %}
+        <h2>Top_10Videos for Channel: {{ selected_channel }}</h2>
+        <ul>
+            {% for video in videos %}
+                <li>{{ video.Title }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
